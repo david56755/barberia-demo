@@ -367,7 +367,8 @@ const twEl=document.querySelector('.h-sub')
 if(twEl){const txt=twEl.textContent.trim();twEl.textContent='';twEl.style.opacity='1';twEl.style.animation='none';let i=0;setTimeout(()=>{const cur=document.createElement('span');cur.className='tw-cursor';twEl.appendChild(cur);const t=setInterval(()=>{twEl.insertBefore(document.createTextNode(txt[i++]),cur);if(i>=txt.length){clearInterval(t);setTimeout(()=>cur.remove(),2000)}},45)},1800)}
 const hours={0:[null,null],1:[9,20],2:[9,20],3:[9,20],4:[9,20],5:[9,20],6:[9,20]}
 function checkStatus(){const now=new Date(),d=now.getDay(),h=now.getHours(),bar=document.getElementById('statusBar'),hr=hours[d];if(!hr||!hr[0]){bar.innerHTML='<span class="status-dot"></span> Hoy cerramos — Abrimos mañana';bar.className='status-bar closed'}else if(h>=hr[0]&&h<hr[1]){bar.innerHTML=`<span class="status-dot"></span> Abierto ahora · Cerramos a las ${hr[1]}:00`;bar.className='status-bar open'}else{bar.innerHTML=`<span class="status-dot"></span> Cerrado · Abrimos a las ${hr[0]}:00`;bar.className='status-bar closed'}}
-function waService(s){window.open(`https://wa.me/5215530207385?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20para:%20${encodeURIComponent(s)}`,"_blank")}
+const KNOWN_SERVICES=['Corte Clásico - $120','Corte + Barba - $180','Manicure Clásico - $100','Manicure Gel - $200','Afeitado Clásico - $150','Paquete VIP - $350']
+function waService(s){if(!KNOWN_SERVICES.includes(s))return;window.open(`https://wa.me/5215530207385?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20para:%20${encodeURIComponent(s)}`,"_blank")}
 checkStatus()
 let tCur=0,tAuto
 const tCards=document.querySelectorAll('.test-card'),tDots=document.querySelectorAll('.dot-t')

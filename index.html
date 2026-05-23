@@ -148,6 +148,22 @@ footer p{font-size:10px;color:var(--gray);letter-spacing:2px}
 .soc{display:flex;gap:10px}
 .soc a{width:36px;height:36px;border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:14px;transition:all .3s}
 .soc a:hover{background:var(--gold);color:var(--black);transform:translateY(-3px)}
+/* SCROLL PROGRESS BAR */
+#spb{position:fixed;top:0;left:0;width:0%;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));z-index:9999;transition:width .1s linear;pointer-events:none}
+/* NAV ACTIVE */
+.nav-links a.active{color:var(--gold)}
+/* RIPPLE */
+.rpl{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rplA .55s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
+@keyframes rplA{to{transform:scale(4);opacity:0}}
+/* GALLERY CLIP-PATH REVEAL */
+.g-item.rev{opacity:1!important;transform:none!important;clip-path:inset(100% 0 0 0);transition:clip-path .7s cubic-bezier(.4,0,.2,1),border-color .4s!important}
+.g-item.rev.on{clip-path:inset(0% 0 0 0)}
+/* TYPEWRITER CURSOR */
+.tw-cursor{display:inline-block;width:2px;height:.85em;background:var(--gold);vertical-align:middle;margin-left:1px;animation:twBlink .8s step-end infinite}
+@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
+/* 3D TILT PERSPECTIVE */
+.svcs{perspective:1200px}
+@media(pointer:coarse){.svc{transform:none!important}}
 @media(max-width:768px){
   nav,footer{padding:16px 20px}
   .nav-links,.h-stats{display:none}
@@ -337,6 +353,18 @@ footer p{font-size:10px;color:var(--gray);letter-spacing:2px}
 
 <script>
 window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hide'),1800))
+// Scroll progress bar
+document.addEventListener('scroll',()=>{const s=document.documentElement;document.getElementById('spb').style.width=(s.scrollTop/(s.scrollHeight-s.clientHeight)*100)+'%'},{passive:true})
+// Nav active section spy
+const navSecObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));const a=document.querySelector(`.nav-links a[href="#${en.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:.4})
+;['servicios','galeria','proceso','contacto','testimonios'].forEach(id=>{const el=document.getElementById(id);if(el)navSecObs.observe(el)})
+// Ripple on CTA buttons
+document.querySelectorAll('.btn-g,.btn-o,.btn-wa').forEach(btn=>{btn.addEventListener('click',e=>{const r=document.createElement('span'),rect=btn.getBoundingClientRect(),d=Math.max(rect.width,rect.height);r.className='rpl';r.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-rect.left-d/2}px;top:${e.clientY-rect.top-d/2}px`;btn.appendChild(r);setTimeout(()=>r.remove(),600)})})
+// 3D tilt on service cards
+document.querySelectorAll('.svc').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect(),x=((e.clientX-r.left)/r.width-.5)*14,y=-((e.clientY-r.top)/r.height-.5)*14;card.style.transform=`translateY(-8px) rotateY(${x}deg) rotateX(${y}deg)`});card.addEventListener('mouseleave',()=>{card.style.transform=''})})
+// Typewriter on hero subtitle
+const twEl=document.querySelector('.h-sub')
+if(twEl){const txt=twEl.textContent.trim();twEl.textContent='';twEl.style.opacity='1';twEl.style.animation='none';let i=0;setTimeout(()=>{const cur=document.createElement('span');cur.className='tw-cursor';twEl.appendChild(cur);const t=setInterval(()=>{twEl.insertBefore(document.createTextNode(txt[i++]),cur);if(i>=txt.length){clearInterval(t);setTimeout(()=>cur.remove(),2000)}},45)},1800)}
 const hours={0:[null,null],1:[9,20],2:[9,20],3:[9,20],4:[9,20],5:[9,20],6:[9,20]}
 function checkStatus(){const now=new Date(),d=now.getDay(),h=now.getHours(),bar=document.getElementById('statusBar'),hr=hours[d];if(!hr||!hr[0]){bar.innerHTML='<span class="status-dot"></span> Hoy cerramos — Abrimos mañana';bar.className='status-bar closed'}else if(h>=hr[0]&&h<hr[1]){bar.innerHTML=`<span class="status-dot"></span> Abierto ahora · Cerramos a las ${hr[1]}:00`;bar.className='status-bar open'}else{bar.innerHTML=`<span class="status-dot"></span> Cerrado · Abrimos a las ${hr[0]}:00`;bar.className='status-bar closed'}}
 function waService(s){window.open(`https://wa.me/5215530207385?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20para:%20${encodeURIComponent(s)}`,"_blank")}
@@ -375,5 +403,6 @@ document.querySelectorAll('.stat-n').forEach(el=>cObs.observe(el))
 const rObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('on')})},{threshold:.1})
 document.querySelectorAll('.rev,.rev-l').forEach(el=>rObs.observe(el))
 </script>
+<div id="spb"></div>
 </body>
 </html>

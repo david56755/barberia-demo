@@ -3,407 +3,672 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Black Gold Barbería</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>El Rincón del Barbero — Guadalajara</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#C9A84C;--gold2:#E8C96A;--black:#080808;--card:#111;--white:#F5F0E8;--gray:#777}
-*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
-#cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s}
-#cur2{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5}
-#loader{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .8s,visibility .8s}
-#loader.hide{opacity:0;visibility:hidden}
-.ld-logo{font-family:'Playfair Display',serif;font-size:52px;color:var(--gold);letter-spacing:8px;animation:ldPulse 1.5s ease-in-out infinite}
-.ld-bar{width:200px;height:2px;background:rgba(201,168,76,.2);overflow:hidden;position:relative}
-.ld-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:ldScan 1.5s ease-in-out infinite}
-@keyframes ldPulse{0%,100%{opacity:.4}50%{opacity:1}}
-@keyframes ldScan{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
-nav{position:fixed;top:0;width:100%;z-index:100;padding:22px 60px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
-nav.sc{background:rgba(8,8,8,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.12);padding:14px 60px}
-.logo{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:4px;color:var(--gold);text-transform:uppercase}
-.logo span{color:var(--white)}
-.nav-links{display:flex;gap:40px;list-style:none}
-.nav-links a{color:rgba(245,240,232,.5);text-decoration:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;transition:color .3s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
-.nav-links a:hover{color:var(--gold)}
-.nav-links a:hover::after{width:100%}
+:root{
+  --bg:#FDF8F3;--bg2:#F5EEE4;--dark:#1B2A4A;--card:#fff;
+  --p:#C0392B;--p2:#E74C3C;
+  --navy:#1B2A4A;--gold:#D4A017;
+  --txt:#1B2A4A;--mu:#7A6A5A;--bord:#E8DDD0;
+  --w:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
+
+/* SCROLL PROGRESS BAR */
+#spb{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--p);z-index:9999;transition:width .1s linear;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:3px;width:100%;z-index:100;background:var(--w);border-bottom:3px solid var(--p);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;box-shadow:0 2px 12px rgba(27,42,74,.1)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-brand .pole{font-size:1.6rem;line-height:1}
+.nav-brand-text .name{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy);text-transform:uppercase;letter-spacing:1px;line-height:1.1}
+.nav-brand-text .sub{font-family:'Oswald',sans-serif;font-weight:400;font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:2px}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:400;text-transform:uppercase;letter-spacing:2px;color:var(--navy);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--p)}
+.nav-reservar{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;background:var(--p);color:var(--w);padding:8px 20px;text-decoration:none;transition:background .2s}
+.nav-reservar:hover{background:var(--p2)}
 
 /* HERO */
-.hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(rgba(8,8,8,.85),rgba(8,8,8,.85)),url('https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?w=1600') center/cover no-repeat}
-canvas{position:absolute;inset:0;z-index:0}
-.hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(201,168,76,.13) 0%,transparent 70%);top:50%;right:-50px;transform:translateY(-50%);animation:gPulse 4s ease-in-out infinite;z-index:0}
-@keyframes gPulse{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-50%) scale(1.1)}}
-.hero-content{position:relative;z-index:1;padding:0 60px;max-width:720px}
-.h-tag{font-size:10px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px;opacity:0;animation:sR .9s .5s forwards}
-.h-tag::before{content:'';width:40px;height:1px;background:var(--gold)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(58px,8vw,100px);line-height:.93;font-weight:900}
-.line{display:block;overflow:hidden}
-.line span{display:block;transform:translateY(110%);animation:sU .9s ease forwards}
-.line:nth-child(1) span{animation-delay:.7s}
-.line:nth-child(2) span{animation-delay:.85s;font-style:italic;color:var(--gold)}
-.line:nth-child(3) span{animation-delay:1s}
-.h-sub{font-size:13px;color:rgba(245,240,232,.5);letter-spacing:4px;margin:32px 0 48px;opacity:0;animation:fIn .8s 1.2s forwards}
-.h-btns{display:flex;gap:16px;opacity:0;animation:fIn .8s 1.4s forwards}
-.btn-g{padding:16px 40px;background:var(--gold);color:var(--black);text-decoration:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:700;transition:all .3s;display:inline-block;position:relative;overflow:hidden}
-.btn-g::before{content:'';position:absolute;inset:0;background:var(--gold2);transform:translateX(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.btn-g:hover::before{transform:translateX(0)}
-.btn-g span{position:relative;z-index:1}
-.btn-o{padding:16px 40px;border:1px solid rgba(201,168,76,.5);color:var(--gold);text-decoration:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:700;transition:all .3s;display:inline-block}
-.btn-o:hover{background:rgba(201,168,76,.1);border-color:var(--gold)}
-.h-stats{position:absolute;right:60px;bottom:60px;display:flex;gap:40px;opacity:0;animation:fIn .8s 1.6s forwards}
-.stat-n{font-family:'Playfair Display',serif;font-size:44px;color:var(--gold);display:block;line-height:1}
-.stat-l{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);display:block;margin-top:4px}
-.scroll-ind{position:absolute;bottom:40px;left:60px;display:flex;align-items:center;gap:16px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);opacity:0;animation:fIn .8s 2s forwards;z-index:1}
-.scroll-ind::before{content:'';width:1px;height:60px;background:linear-gradient(var(--gold),transparent);animation:scD 2s ease-in-out infinite}
-@keyframes scD{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-@keyframes sR{to{opacity:1}}@keyframes sU{to{transform:translateY(0)}}@keyframes fIn{to{opacity:1}}
+.hero{display:flex;min-height:calc(100vh - 59px);margin-top:59px}
+.hero-left{flex:0 0 55%;background:var(--bg);display:flex;align-items:center;padding:80px 60px 80px 72px;position:relative;overflow:hidden}
+.hero-left::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 28px,rgba(192,57,43,.04) 28px,rgba(192,57,43,.04) 30px);pointer-events:none}
+.hero-left-inner{position:relative;z-index:1;max-width:520px}
+.hero-tag{font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--p);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';width:36px;height:2px;background:var(--p)}
+.hero h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(4rem,8vw,7rem);line-height:.95;letter-spacing:-1px;text-transform:uppercase;color:var(--navy);margin-bottom:32px}
+.hero h1 .line-wrap{display:block;overflow:hidden}
+.hero h1 .line-inner{display:block;transform:translateX(-60px);opacity:0}
+.hero-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.05rem;color:var(--mu);line-height:1.7;margin-bottom:40px;opacity:0;transform:translateY(16px)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px)}
+.btn-red{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--p);color:var(--w);padding:14px 32px;text-decoration:none;border:2px solid var(--p);transition:all .2s;display:inline-block}
+.btn-red:hover{background:transparent;color:var(--p)}
+.btn-navy{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:transparent;color:var(--navy);padding:14px 32px;text-decoration:none;border:2px solid var(--navy);transition:all .2s;display:inline-block}
+.btn-navy:hover{background:var(--navy);color:var(--w)}
 
-/* MARQUEE */
-.marquee{background:var(--gold);padding:18px 0;overflow:hidden}
-.marquee-t{display:flex;gap:60px;animation:mar 18s linear infinite;white-space:nowrap}
-.marquee-t span{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--black);letter-spacing:2px;text-transform:uppercase;flex-shrink:0}
-@keyframes mar{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.hero-right{flex:0 0 45%;background:repeating-linear-gradient(-45deg,var(--navy),var(--navy) 20px,#C0392B 20px,#C0392B 25px,var(--navy) 25px,var(--navy) 45px,#fff 45px,#fff 50px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:28px;position:relative;overflow:hidden;padding:60px 40px}
+.hero-right::after{content:'';position:absolute;inset:0;background:rgba(27,42,74,.55);pointer-events:none}
+.hero-pole{font-size:5rem;line-height:1;position:relative;z-index:1;text-align:center;opacity:0;transform:scale(.6)}
+.hero-badge{position:relative;z-index:1;background:var(--p);color:var(--w);font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:8px 22px;border:2px solid rgba(255,255,255,.5);opacity:0;transform:scale(.8)}
+.hero-stats{position:relative;z-index:1;display:flex;flex-direction:column;gap:0;border:2px solid rgba(255,255,255,.25);width:100%;max-width:220px;opacity:0;transform:translateY(20px)}
+.hero-stat{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.15);text-align:center}
+.hero-stat:last-child{border-bottom:none}
+.hero-stat-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.6rem;color:var(--w);letter-spacing:1px;display:block;line-height:1}
+.hero-stat-label{font-family:'Oswald',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);display:block;margin-top:4px}
 
-/* REVEAL */
-section{padding:120px 60px}
-.rev{opacity:0;transform:translateY(50px);transition:opacity .8s,transform .8s}
-.rev.on{opacity:1;transform:translateY(0)}
-.rev-l{opacity:0;transform:translateX(-50px);transition:opacity .9s,transform .9s}
-.rev-l.on{opacity:1;transform:translateX(0)}
+/* MARQUEE STRIP */
+.marquee-strip{background:var(--p);padding:14px 0;overflow:hidden;border-top:3px solid var(--navy);border-bottom:3px solid var(--navy)}
+.marquee-inner{display:flex;gap:48px;animation:marqueeRoll 22s linear infinite;white-space:nowrap}
+.marquee-inner span{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--w);flex-shrink:0}
+.marquee-inner .dot{color:rgba(255,255,255,.5);flex-shrink:0}
+@keyframes marqueeRoll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.s-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.s-tag::before{content:'';width:30px;height:1px;background:var(--gold)}
-.s-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);line-height:1.1;margin-bottom:60px}
-.s-title em{font-style:italic;color:var(--gold)}
+/* SECTIONS SHARED */
+section{padding:100px 72px}
+.sec-tag{font-family:'Oswald',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--p);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-tag::before{content:'';width:30px;height:2px;background:var(--p)}
+.sec-heading{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(2.4rem,5vw,3.6rem);text-transform:uppercase;color:var(--navy);line-height:1.05;letter-spacing:-0.5px;margin-bottom:16px}
+.sec-heading .underline{display:inline-block;position:relative}
+.sec-heading .underline::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:4px;background:var(--p)}
+.sec-intro{font-family:'Source Serif 4',serif;color:var(--mu);font-size:1rem;line-height:1.8;margin-bottom:60px;max-width:560px}
 
 /* SERVICIOS */
-#servicios{background:#0d0d0d}
-.svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.svc{background:var(--card);padding:48px 36px;border:1px solid rgba(201,168,76,.07);position:relative;overflow:hidden;transition:all .4s;cursor:pointer}
-.svc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.07),transparent);opacity:0;transition:opacity .4s}
-.svc::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s}
-.svc:hover{transform:translateY(-8px);border-color:rgba(201,168,76,.3);box-shadow:0 30px 60px rgba(0,0,0,.5)}
-.svc:hover::before{opacity:1}.svc:hover::after{transform:scaleX(1)}
-.svc-n{font-family:'Playfair Display',serif;font-size:56px;color:rgba(201,168,76,.05);position:absolute;top:16px;right:20px;transition:color .4s}
-.svc:hover .svc-n{color:rgba(201,168,76,.15)}
-.svc-i{font-size:28px;color:var(--gold);margin-bottom:22px;display:block;transition:transform .4s}
-.svc:hover .svc-i{transform:rotate(12deg) scale(1.2)}
-.svc h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:12px}
-.svc p{font-size:13px;color:var(--gray);line-height:1.8;margin-bottom:20px}
-.svc-cta{margin-top:16px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.5);transition:color .3s;font-weight:600}
-.svc:hover .svc-cta{color:var(--gold)}
-.svc-p small{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--gray);margin-left:4px}
+#servicios{background:var(--bg2)}
+.servicios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ticket{background:var(--card);border-left:4px solid var(--navy);padding:28px 28px 24px;box-shadow:0 2px 12px rgba(27,42,74,.07);transition:border-left-color .2s,transform .2s;position:relative;overflow:hidden;opacity:0;transform:translateY(30px)}
+.ticket::before{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 32px 32px 0;border-color:transparent var(--bg2) transparent transparent}
+.ticket:hover{border-left-color:var(--p);transform:translateX(4px)}
+.ticket-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:6px}
+.ticket-desc{font-family:'Source Serif 4',serif;font-size:.85rem;color:var(--mu);margin-bottom:16px;line-height:1.6}
+.ticket-footer{display:flex;align-items:baseline;gap:12px}
+.ticket-price{font-family:'Oswald',sans-serif;font-weight:700;font-size:2rem;color:var(--p);line-height:1}
+.ticket-dur{font-family:'Oswald',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--mu);padding:3px 8px;border:1px solid var(--bord);font-variant:small-caps}
 
-/* QUOTE */
-.quote{padding:100px 60px;background:linear-gradient(135deg,#0a0a0a,#111);text-align:center;position:relative;overflow:hidden}
-.quote::before{content:'"';font-family:'Playfair Display',serif;font-size:500px;color:rgba(201,168,76,.03);position:absolute;top:-80px;left:50%;transform:translateX(-50%);line-height:1;pointer-events:none}
-.q-text{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,38px);font-style:italic;color:var(--white);max-width:800px;margin:0 auto 20px;line-height:1.5;position:relative;z-index:1}
-.q-auth{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+/* DON MARCOS */
+#donmarcos{background:var(--navy);padding:100px 72px}
+.donmarcos-inner{display:flex;gap:80px;align-items:center}
+.donmarcos-left{flex:1}
+.donmarcos-h{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(2.6rem,5.5vw,4.2rem);text-transform:uppercase;color:var(--w);line-height:.92;letter-spacing:-1px;margin-bottom:32px}
+.donmarcos-h span{display:block}
+.donmarcos-h .accent{color:var(--gold)}
+.donmarcos-desc{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.05rem;color:rgba(255,255,255,.72);line-height:1.9;max-width:440px;margin-bottom:24px}
+.donmarcos-quote-line{width:48px;height:3px;background:var(--p);margin-bottom:24px}
+.donmarcos-right{flex:0 0 340px}
+.donmarcos-card{background:var(--bg);padding:36px 32px;position:relative}
+.donmarcos-card::before{content:'MASTER BARBER';position:absolute;top:-12px;right:24px;background:var(--gold);color:var(--dark);font-family:'Oswald',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:5px 14px}
+.donmarcos-card h4{font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--bord)}
+.donmarcos-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.donmarcos-list li{font-family:'Source Serif 4',serif;font-size:.9rem;color:var(--txt);display:flex;align-items:center;gap:10px}
+.donmarcos-list li::before{content:'✂';font-size:.8rem;color:var(--p);flex-shrink:0}
+.cert-badge{background:var(--p);color:var(--w);font-family:'Oswald',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 16px;text-align:center;margin-top:8px;display:block}
 
 /* GALERÍA */
-#galeria{background:#0d0d0d}
-.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,200px);gap:4px}
-.g-item{position:relative;overflow:hidden;background:var(--card);border:1px solid rgba(201,168,76,.07);cursor:pointer;transition:border-color .4s}
-.g-item:first-child{grid-column:span 2;grid-row:span 2}
-.g-item:nth-child(4){grid-column:span 2}
-.g-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
-.g-ph i{font-size:32px;color:rgba(201,168,76,.12);transition:all .4s}
-.g-ph p{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.15);transition:all .4s}
-.g-ov{position:absolute;inset:0;background:rgba(201,168,76,.12);opacity:0;transition:opacity .4s;display:flex;align-items:center;justify-content:center}
-.g-ov i{font-size:28px;color:var(--gold);transform:scale(0);transition:transform .4s}
-.g-item:hover .g-ov{opacity:1}.g-item:hover .g-ov i{transform:scale(1)}
-.g-item:hover{border-color:rgba(201,168,76,.4)}.g-item:hover .g-ph i{color:rgba(201,168,76,.3)}
+#galeria{background:var(--bg)}
+.galeria-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.gal-card{background:var(--card);overflow:hidden;box-shadow:0 2px 12px rgba(27,42,74,.07);opacity:0;transform:translateY(30px)}
+.gal-ph{height:200px;background:linear-gradient(160deg,#1B2A4A 0%,#2c4270 40%,#C0392B 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.gal-ph::after{content:'✂';font-size:3rem;color:rgba(255,255,255,.12);position:absolute}
+.gal-ph-icon{font-size:2rem;color:rgba(255,255,255,.3);position:relative;z-index:1}
+.gal-body{padding:18px 20px 20px}
+.gal-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:8px}
+.gal-badge{display:inline-block;background:var(--p);color:var(--w);font-family:'Oswald',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px}
+.gal-card:nth-child(1) .gal-ph{background:linear-gradient(160deg,#1B2A4A,#3a5f9c)}
+.gal-card:nth-child(2) .gal-ph{background:linear-gradient(160deg,#C0392B,#8B1E11)}
+.gal-card:nth-child(3) .gal-ph{background:linear-gradient(160deg,#2c4270,#C0392B)}
+.gal-card:nth-child(4) .gal-ph{background:linear-gradient(160deg,#1B2A4A 20%,#D4A017)}
+.gal-card:nth-child(5) .gal-ph{background:linear-gradient(160deg,#8B1E11,#1B2A4A)}
+.gal-card:nth-child(6) .gal-ph{background:linear-gradient(160deg,#3a5f9c,#C0392B 80%)}
 
-/* PROCESO */
-#proceso{background:var(--black)}
-.steps{display:flex;gap:0;position:relative;margin-top:60px}
-.steps::before{content:'';position:absolute;top:27px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.step{flex:1;text-align:center;padding:0 20px;position:relative}
-.step-c{width:54px;height:54px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;background:var(--black);font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);transition:all .4s;cursor:default}
-.step:hover .step-c{background:var(--gold);color:var(--black);transform:scale(1.2);box-shadow:0 0 30px rgba(201,168,76,.4)}
-.step h4{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:10px;transition:color .3s}
-.step:hover h4{color:var(--gold)}
-.step p{font-size:12px;color:var(--gray);line-height:1.7}
+/* RESERVAR CTA */
+#reservar{background:var(--p);padding:100px 72px;text-align:center}
+.reservar-h{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(2.8rem,6vw,5rem);text-transform:uppercase;color:var(--w);line-height:.95;letter-spacing:-1px;margin-bottom:40px}
+.reservar-h span{display:block}
+.btn-white{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;background:var(--w);color:var(--p);padding:18px 48px;text-decoration:none;border:3px solid var(--w);transition:all .2s;display:inline-block;margin-bottom:32px}
+.btn-white:hover{background:transparent;color:var(--w)}
+.reservar-phone{font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:2px;margin-bottom:24px;display:block}
+.reservar-info{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.reservar-info-item{font-family:'Source Serif 4',serif;font-size:.9rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px}
+.reservar-info-item::before{content:'📍';font-size:.9rem}
+.reservar-info-item.hours::before{content:'🕐'}
 
-/* CONTACTO */
-#contacto{background:#0d0d0d;text-align:center}
-.c-inner{max-width:680px;margin:0 auto}
-.c-box{background:var(--card);border:1px solid rgba(201,168,76,.15);padding:60px;margin-top:48px;position:relative;overflow:hidden}
-.c-box::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:scan 3s ease-in-out infinite}
-@keyframes scan{to{left:200%}}
-.ci{display:flex;align-items:center;gap:20px;margin-bottom:28px;text-align:left;transition:transform .3s}
-.ci:hover{transform:translateX(8px)}
-.ci-ic{width:44px;height:44px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;transition:all .4s}
-.ci:hover .ci-ic{background:var(--gold);color:var(--black)}
-.ci p{font-size:11px;color:var(--gray);margin-bottom:2px;letter-spacing:1px}
-.ci strong{font-size:15px}
-.btn-wa{display:inline-flex;align-items:center;gap:12px;margin-top:40px;padding:18px 48px;background:#25D366;color:white;text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;transition:all .3s;position:relative;overflow:hidden}
-.btn-wa::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.2);border-radius:50%;transition:width .6s,height .6s,top .6s,left .6s;transform:translate(-50%,-50%)}
-.btn-wa:hover::before{width:300px;height:300px}
-.btn-wa:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(37,211,102,.4)}
-footer{background:#050505;border-top:1px solid rgba(201,168,76,.1);padding:36px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.f-logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);letter-spacing:4px}
-footer p{font-size:10px;color:var(--gray);letter-spacing:2px}
-.soc{display:flex;gap:10px}
-.soc a{width:36px;height:36px;border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:14px;transition:all .3s}
-.soc a:hover{background:var(--gold);color:var(--black);transform:translateY(-3px)}
-/* SCROLL PROGRESS BAR */
-#spb{position:fixed;top:0;left:0;width:0%;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));z-index:9999;transition:width .1s linear;pointer-events:none}
-/* NAV ACTIVE */
-.nav-links a.active{color:var(--gold)}
-/* RIPPLE */
-.rpl{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rplA .55s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
-@keyframes rplA{to{transform:scale(4);opacity:0}}
-/* GALLERY CLIP-PATH REVEAL */
-.g-item.rev{opacity:1!important;transform:none!important;clip-path:inset(100% 0 0 0);transition:clip-path .7s cubic-bezier(.4,0,.2,1),border-color .4s!important}
-.g-item.rev.on{clip-path:inset(0% 0 0 0)}
-/* TYPEWRITER CURSOR */
-.tw-cursor{display:inline-block;width:2px;height:.85em;background:var(--gold);vertical-align:middle;margin-left:1px;animation:twBlink .8s step-end infinite}
-@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
-/* 3D TILT PERSPECTIVE */
-.svcs{perspective:1200px}
-@media(pointer:coarse){.svc{transform:none!important}}
-@media(max-width:768px){
-  nav,footer{padding:16px 20px}
-  .nav-links,.h-stats{display:none}
-  .hero-content{padding:0 24px}
-  section{padding:80px 24px}
-  .svcs{grid-template-columns:1fr}
-  .steps{flex-direction:column;gap:40px}
-  .steps::before{display:none}
-  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .g-item:first-child,.g-item:nth-child(4){grid-column:span 1;grid-row:span 1}
-  .c-box{padding:36px 20px}
-  footer{flex-direction:column;text-align:center}
+/* RESEÑAS */
+#resenas{background:var(--bg2);padding:100px 72px}
+.resenas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review-card{background:var(--card);border:2px solid var(--navy);padding:32px 28px;position:relative}
+.review-card::before{content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;border:2px solid var(--navy);z-index:-1;opacity:.15}
+.review-stars{color:var(--p);font-size:1.1rem;letter-spacing:3px;margin-bottom:16px}
+.review-text{font-family:'Source Serif 4',serif;font-style:italic;font-size:.95rem;color:var(--txt);line-height:1.8;margin-bottom:20px}
+.review-author{display:flex;align-items:center;gap:12px}
+.review-av{width:42px;height:42px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;font-size:.85rem;color:var(--w);flex-shrink:0}
+.review-av.red{background:var(--p)}
+.review-av.gold{background:var(--gold)}
+.review-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--navy)}
+.review-service{font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--mu)}
+
+/* FOOTER */
+footer{background:var(--navy);padding:60px 72px 36px;color:var(--w)}
+.footer-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-bottom:48px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo-text .name{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:2px;color:var(--w)}
+.footer-logo-text .sub{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.footer-desc{font-family:'Source Serif 4',serif;font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.8}
+.footer-col-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(192,57,43,.4)}
+.footer-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-list li{font-family:'Source Serif 4',serif;font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.6}
+.footer-list a{color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.footer-list a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-family:'Source Serif 4',serif;font-size:.8rem;color:rgba(255,255,255,.4)}
+.footer-red-accent{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--p)}
+
+/* GSAP SCROLL TRIGGER UTILITY */
+.gsap-reveal{opacity:0;transform:translateY(40px)}
+
+/* DIVIDER STRIPE */
+.stripe-divider{height:8px;background:repeating-linear-gradient(90deg,var(--p) 0,var(--p) 33.33%,var(--navy) 33.33%,var(--navy) 66.66%,var(--w) 66.66%,var(--w) 100%)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 20px}
+  .nav-links{gap:18px}
+  section{padding:72px 24px}
+  #donmarcos{padding:72px 24px}
+  #reservar{padding:72px 24px}
+  #resenas{padding:72px 24px}
+  footer{padding:48px 24px 24px}
+  .hero{flex-direction:column;min-height:auto}
+  .hero-left{flex:none;padding:60px 24px;min-height:70vh}
+  .hero-right{flex:none;min-height:260px;padding:40px 24px}
+  .servicios-grid,.galeria-grid,.resenas-grid{grid-template-columns:1fr 1fr}
+  .donmarcos-inner{flex-direction:column;gap:40px}
+  .donmarcos-right{flex:none;width:100%}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .hero h1{font-size:3.5rem}
+  .servicios-grid,.galeria-grid,.resenas-grid{grid-template-columns:1fr}
+  .reservar-info{flex-direction:column;gap:16px;align-items:center}
 }
 </style>
 </head>
 <body>
-<div id="loader"><div class="ld-logo">BG</div><div class="ld-bar"></div></div>
-<div id="cur"></div><div id="cur2"></div>
 
+<!-- SCROLL PROGRESS BAR -->
+<div id="spb"></div>
+
+<!-- NAV -->
 <nav id="nav">
-  <div class="logo">Black<span>Gold</span></div>
+  <a href="#" class="nav-brand">
+    <span class="pole">💈</span>
+    <div class="nav-brand-text">
+      <div class="name">El Rincón</div>
+      <div class="sub">del Barbero</div>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#donmarcos">El Barbero</a></li>
     <li><a href="#galeria">Galería</a></li>
-    <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
+    <li><a href="#reservar" class="nav-reservar">Reservar</a></li>
   </ul>
 </nav>
 
-<section class="hero">
-  <canvas id="cnv"></canvas>
-  <div class="hero-glow"></div>
-  <div class="hero-content">
-    <div class="h-tag">Barbería &amp; Manicure Premium</div>
-    <h1>
-      <div class="line"><span>El Arte</span></div>
-      <div class="line"><span>de Lucir</span></div>
-      <div class="line"><span>Perfecto</span></div>
-    </h1>
-    <p class="h-sub">Estilo · Precisión · Elegancia</p>
-    <div class="h-btns">
-      <a href="https://wa.me/5215530207385" class="btn-g"><span>Reservar Cita</span></a>
-      <a href="#servicios" class="btn-o">Ver Servicios</a>
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <!-- LEFT: cream / poster side -->
+  <div class="hero-left">
+    <div class="hero-left-inner">
+      <div class="hero-tag">Barbería Clásica · Guadalajara</div>
+      <h1>
+        <div class="line-wrap"><span class="line-inner" id="hl1">CORTES QUE</span></div>
+        <div class="line-wrap"><span class="line-inner" id="hl2">HABLAN POR</span></div>
+        <div class="line-wrap"><span class="line-inner" id="hl3">SÍ SOLOS</span></div>
+      </h1>
+      <p class="hero-sub" id="heroSub">Barbería clásica desde 1998. El arte del buen corte, la tradición del oficio y el respeto por el cliente.</p>
+      <div class="hero-btns" id="heroBtns">
+        <a href="https://wa.me/523312345678?text=Hola!%20Quiero%20reservar%20un%20corte" class="btn-red" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
+        <a href="#servicios" class="btn-navy">Ver precios</a>
+      </div>
     </div>
   </div>
-  <div class="h-stats">
-    <div><span class="stat-n" data-t="500">0</span><span class="stat-l">Clientes</span></div>
-    <div><span class="stat-n" data-t="5">0</span><span class="stat-l">Años</span></div>
-    <div><span class="stat-n" data-t="6">0</span><span class="stat-l">Servicios</span></div>
+  <!-- RIGHT: striped / badge side -->
+  <div class="hero-right">
+    <div class="hero-pole" id="heroPole">💈</div>
+    <div class="hero-badge" id="heroBadge">● ABIERTO AHORA</div>
+    <div class="hero-stats" id="heroStats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">25 AÑOS</span>
+        <span class="hero-stat-label">De experiencia</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">10K+ CORTES</span>
+        <span class="hero-stat-label">Realizados</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">5★ GOOGLE</span>
+        <span class="hero-stat-label">Calificación</span>
+      </div>
+    </div>
   </div>
-  <div class="scroll-ind">Scroll</div>
 </section>
 
-<div class="marquee">
-  <div class="marquee-t">
-    <span><i class="fas fa-cut" style="margin-right:10px"></i>Barbería Premium</span>
-    <span><i class="fas fa-star" style="margin-right:10px"></i>Manicure Profesional</span>
-    <span><i class="fas fa-gem" style="margin-right:10px"></i>Estilo y Elegancia</span>
-    <span><i class="fas fa-fire" style="margin-right:10px"></i>Afeitado Clásico</span>
-    <span><i class="fas fa-scissors" style="margin-right:10px"></i>Cortes de Precisión</span>
-    <span><i class="fas fa-cut" style="margin-right:10px"></i>Barbería Premium</span>
-    <span><i class="fas fa-star" style="margin-right:10px"></i>Manicure Profesional</span>
-    <span><i class="fas fa-gem" style="margin-right:10px"></i>Estilo y Elegancia</span>
-    <span><i class="fas fa-fire" style="margin-right:10px"></i>Afeitado Clásico</span>
-    <span><i class="fas fa-scissors" style="margin-right:10px"></i>Cortes de Precisión</span>
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Barbería Clásica</span><span class="dot">✦</span>
+    <span>Cortes de Precisión</span><span class="dot">✦</span>
+    <span>Afeitado con Navaja</span><span class="dot">✦</span>
+    <span>Tradición Desde 1998</span><span class="dot">✦</span>
+    <span>Guadalajara · Jalisco</span><span class="dot">✦</span>
+    <span>Don Marcos Barbero</span><span class="dot">✦</span>
+    <span>Barbería Clásica</span><span class="dot">✦</span>
+    <span>Cortes de Precisión</span><span class="dot">✦</span>
+    <span>Afeitado con Navaja</span><span class="dot">✦</span>
+    <span>Tradición Desde 1998</span><span class="dot">✦</span>
+    <span>Guadalajara · Jalisco</span><span class="dot">✦</span>
+    <span>Don Marcos Barbero</span><span class="dot">✦</span>
   </div>
 </div>
 
+<!-- SERVICIOS / PRECIOS -->
 <section id="servicios">
-  <div class="rev"><div class="s-tag">Lo que ofrecemos</div><h2 class="s-title">Nuestros <em>Servicios</em></h2></div>
-  <div class="svcs">
-    <div class="svc rev" onclick="waService('Corte Clásico - $120')"><span class="svc-n">01</span><i class="fas fa-cut svc-i"></i><h3>Corte Clásico</h3><p>Corte personalizado con lavado y secado incluido.</p><div class="svc-p">$120<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
-    <div class="svc rev" style="transition-delay:.1s" onclick="waService('Corte + Barba - $180')"><span class="svc-n">02</span><i class="fas fa-user-tie svc-i"></i><h3>Corte + Barba</h3><p>Combo completo con perfilado y hot towel.</p><div class="svc-p">$180<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
-    <div class="svc rev" style="transition-delay:.2s" onclick="waService('Manicure Clásico - $100')"><span class="svc-n">03</span><i class="fas fa-spa svc-i"></i><h3>Manicure Clásico</h3><p>Limpieza, corte y esmaltado profesional.</p><div class="svc-p">$100<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
-    <div class="svc rev" style="transition-delay:.3s" onclick="waService('Manicure Gel - $200')"><span class="svc-n">04</span><i class="fas fa-gem svc-i"></i><h3>Manicure Gel</h3><p>Esmaltado de larga duración hasta 3 semanas.</p><div class="svc-p">$200<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
-    <div class="svc rev" style="transition-delay:.4s" onclick="waService('Afeitado Clásico - $150')"><span class="svc-n">05</span><i class="fas fa-fire svc-i"></i><h3>Afeitado Clásico</h3><p>Navaja, toalla caliente y crema premium.</p><div class="svc-p">$150<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
-    <div class="svc rev" style="transition-delay:.5s" onclick="waService('Paquete VIP - $350')"><span class="svc-n">06</span><i class="fas fa-star svc-i"></i><h3>Paquete VIP</h3><p>Corte + Barba + Manicure. El pack completo.</p><div class="svc-p">$350<small>pesos</small></div><div class="svc-cta">Reservar <i class="fas fa-arrow-right"></i></div></div>
+  <div class="sec-tag">Lo que ofrecemos</div>
+  <h2 class="sec-heading"><span class="underline">NUESTROS SERVICIOS</span></h2>
+  <p class="sec-intro">Precios honestos, trabajo de calidad. Cada servicio incluye consulta personalizada y producto de acabado.</p>
+  <div class="servicios-grid">
+    <div class="ticket">
+      <div class="ticket-name">Corte Clásico</div>
+      <div class="ticket-desc">Corte personalizado con lavado y terminado a máquina o tijera.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$150</span>
+        <span class="ticket-dur">30 min</span>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-name">Fade Degradado</div>
+      <div class="ticket-desc">Degradado skin fade o mid fade, perfectamente nivelado.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$180</span>
+        <span class="ticket-dur">45 min</span>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-name">Barba Completa</div>
+      <div class="ticket-desc">Perfilado, relleno y terminado con aceite de barba premium.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$120</span>
+        <span class="ticket-dur">30 min</span>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-name">Corte + Barba</div>
+      <div class="ticket-desc">Combo completo: corte y arreglo de barba con hot towel.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$280</span>
+        <span class="ticket-dur">60 min</span>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-name">Afeitado Navaja</div>
+      <div class="ticket-desc">Afeitado clásico con navaja, toalla caliente y espuma artesanal.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$200</span>
+        <span class="ticket-dur">45 min</span>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-name">Tratamiento Capilar</div>
+      <div class="ticket-desc">Hidratación profunda, masaje capilar y aclarado en frío.</div>
+      <div class="ticket-footer">
+        <span class="ticket-price">$250</span>
+        <span class="ticket-dur">60 min</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="quote">
-  <p class="q-text rev">"Un buen corte no es solo estética — es confianza, es carácter, es identidad."</p>
-  <div class="q-auth rev">— Black Gold Barbería</div>
-</div>
+<div class="stripe-divider"></div>
 
+<!-- DON MARCOS — SOBRE NOSOTROS -->
+<section id="donmarcos">
+  <div class="donmarcos-inner">
+    <div class="donmarcos-left">
+      <div class="donmarcos-quote-line"></div>
+      <h2 class="donmarcos-h">
+        <span>DON MARCOS,</span>
+        <span>MÁS DE</span>
+        <span class="accent">25 AÑOS</span>
+        <span>DE ARTE</span>
+      </h2>
+      <p class="donmarcos-desc">
+        Desde 1998, Don Marcos ha dedicado su vida al oficio más antiguo del mundo. Cada corte es una obra pensada: la línea exacta, el degradado preciso, la navaja que respeta la piel. No es solo un corte — es el cuidado de un artesano que conoce su herramienta.
+      </p>
+      <p class="donmarcos-desc">
+        Formado en Ciudad de México y perfeccionado en Guadalajara, Don Marcos trae la escuela clásica americana al corazón de Zapopan. Barbería honesta, sin pretensiones, solo buen trabajo.
+      </p>
+    </div>
+    <div class="donmarcos-right">
+      <div class="donmarcos-card">
+        <h4>Servicios especiales</h4>
+        <ul class="donmarcos-list">
+          <li>Cortes para caballero y niños</li>
+          <li>Afeitado tradicional con navaja</li>
+          <li>Perfilado y arreglo de barba</li>
+          <li>Tratamientos capilares naturales</li>
+          <li>Servicio a domicilio (previa cita)</li>
+          <li>Grupos y bodas bajo reserva</li>
+        </ul>
+        <span class="cert-badge">✦ Certificado Master Barber — AMBB 2019 ✦</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe-divider"></div>
+
+<!-- GALERÍA -->
 <section id="galeria">
-  <div class="rev"><div class="s-tag">Nuestro trabajo</div><h2 class="s-title">La <em>Galería</em></h2></div>
-  <div class="gal-grid">
-    <div class="g-item rev" style="overflow:hidden"><img src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?w=800" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"><div class="g-ov"><i class="fas fa-search-plus"></i></div></div>
-    <div class="g-item rev" style="transition-delay:.1s;overflow:hidden"><img src="https://images.pexels.com/photos/668196/pexels-photo-668196.jpeg?w=600" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"><div class="g-ov"><i class="fas fa-search-plus"></i></div></div>
-    <div class="g-item rev" style="transition-delay:.2s;overflow:hidden"><img src="https://images.pexels.com/photos/897262/pexels-photo-897262.jpeg?w=600" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"><div class="g-ov"><i class="fas fa-search-plus"></i></div></div>
-    <div class="g-item rev" style="transition-delay:.3s;overflow:hidden"><img src="https://images.pexels.com/photos/1570807/pexels-photo-1570807.jpeg?w=600" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"><div class="g-ov"><i class="fas fa-search-plus"></i></div></div>
-    <div class="g-item rev" style="transition-delay:.4s;overflow:hidden"><img src="https://images.pexels.com/photos/2061828/pexels-photo-2061828.jpeg?w=600" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"><div class="g-ov"><i class="fas fa-search-plus"></i></div></div>
-  </div>
-</section>
-
-<section id="proceso">
-  <div class="rev" style="text-align:center"><div class="s-tag" style="justify-content:center;margin:0 auto 12px">Cómo trabajamos</div><h2 class="s-title">Tu experiencia <em>paso a paso</em></h2></div>
-  <div class="steps">
-    <div class="step rev"><div class="step-c">1</div><h4>Llegas</h4><p>Te recibimos con café y ambiente premium desde el primer momento.</p></div>
-    <div class="step rev" style="transition-delay:.15s"><div class="step-c">2</div><h4>Consulta</h4><p>Hablamos de tu estilo y te recomendamos el corte perfecto para ti.</p></div>
-    <div class="step rev" style="transition-delay:.3s"><div class="step-c">3</div><h4>Transformación</h4><p>Nuestros especialistas hacen su magia con precisión milimétrica.</p></div>
-    <div class="step rev" style="transition-delay:.45s"><div class="step-c">4</div><h4>Sales perfecto</h4><p>Listo para conquistar el día con estilo y confianza renovada.</p></div>
-  </div>
-</section>
-
-<section id="contacto">
-  <div class="c-inner">
-    <div class="rev"><div class="s-tag" style="justify-content:center;margin:0 auto 12px">Encuéntranos</div><h2 class="s-title">Visítanos o <em>Agenda</em></h2></div>
-    <div class="c-box rev">
-      <div class="ci"><div class="ci-ic"><i class="fas fa-map-marker-alt"></i></div><div><p>Dirección</p><strong>Calle Ejemplo #123, Naucalpan, Edo. México</strong></div></div>
-      <div class="ci"><div class="ci-ic"><i class="fas fa-clock"></i></div><div><p>Horario</p><strong>Lun–Sáb 9am–8pm · Dom 10am–3pm</strong></div></div>
-      <div class="ci"><div class="ci-ic"><i class="fas fa-phone"></i></div><div><p>Teléfono</p><strong>55 3020 7385</strong></div></div>
-      <a href="https://wa.me/5215530207385" class="btn-wa"><i class="fab fa-whatsapp" style="font-size:20px"></i>Agendar por WhatsApp</a>
+  <div class="sec-tag">Nuestro portafolio</div>
+  <h2 class="sec-heading"><span class="underline">NUESTRO TRABAJO</span></h2>
+  <p class="sec-intro">Cada cliente merece un corte a su medida. Aquí algunos de nuestros estilos favoritos.</p>
+  <div class="galeria-grid">
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Classic Taper</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
+    </div>
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Skin Fade</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
+    </div>
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Pompadour Clásico</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
+    </div>
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Buzz Cut + Barba</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
+    </div>
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Undercut Moderno</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
+    </div>
+    <div class="gal-card">
+      <div class="gal-ph"><span class="gal-ph-icon">✂</span></div>
+      <div class="gal-body">
+        <div class="gal-title">Slick Back</div>
+        <span class="gal-badge">Pregunta por este corte</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIOS -->
-<section id="testimonios" style="background:#0a0a0a;padding:100px 60px">
-  <div class="rev" style="text-align:center"><div class="s-tag" style="justify-content:center;margin:0 auto 12px">Lo que dicen</div><h2 class="s-title">Clientes <em>satisfechos</em></h2></div>
-  <div class="test-wrap rev">
-    <div class="test-slider" id="slider">
-      <div class="test-card active"><div class="stars">★★★★★</div><p>"El mejor corte que me han dado en años. El ambiente es increíble y los precios muy accesibles. Ya no voy a otro lugar."</p><div class="test-author"><div class="test-av">JM</div><div><strong>Jorge M.</strong><span>Cliente frecuente</span></div></div></div>
-      <div class="test-card"><div class="stars">★★★★★</div><p>"El manicure de gel me duró casi un mes perfecto. Las chicas son muy profesionales y el lugar se ve de lujo."</p><div class="test-author"><div class="test-av" style="background:#9B5DE5">AL</div><div><strong>Ana L.</strong><span>Manicure Gel</span></div></div></div>
-      <div class="test-card"><div class="stars">★★★★★</div><p>"El paquete VIP vale cada peso. Corte, barba y manicure en un solo lugar. La experiencia es premium desde que llegas."</p><div class="test-author"><div class="test-av" style="background:#1E8449">CR</div><div><strong>Carlos R.</strong><span>Paquete VIP</span></div></div></div>
-      <div class="test-card"><div class="stars">★★★★★</div><p>"El afeitado clásico con toalla caliente fue una experiencia increíble. Me fui sintiéndome como nuevo. 100% recomendado."</p><div class="test-author"><div class="test-av" style="background:#C0392B">MP</div><div><strong>Miguel P.</strong><span>Afeitado Clásico</span></div></div></div>
-    </div>
-    <div class="test-dots" id="dots"><span class="dot-t active" onclick="goTo(0)"></span><span class="dot-t" onclick="goTo(1)"></span><span class="dot-t" onclick="goTo(2)"></span><span class="dot-t" onclick="goTo(3)"></span></div>
-    <button class="t-prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-    <button class="t-next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+<!-- RESERVAR -->
+<section id="reservar">
+  <h2 class="reservar-h">
+    <span>¿LISTO PARA</span>
+    <span>EL CAMBIO?</span>
+  </h2>
+  <a href="https://wa.me/523312345678?text=Hola!%20Quiero%20reservar%20un%20corte" class="btn-white" target="_blank" rel="noopener noreferrer">📲 Reservar por WhatsApp</a>
+  <span class="reservar-phone">331 234 5678</span>
+  <div class="reservar-info">
+    <span class="reservar-info-item">Av. Patria 123, Zapopan, Jalisco</span>
+    <span class="reservar-info-item hours">Lun–Sáb 9:00–20:00</span>
   </div>
 </section>
 
-<!-- BOTÓN WHATSAPP FLOTANTE -->
-<div class="wa-float" id="waFloat">
-  <div class="wa-tooltip">¡Agenda tu cita ahora!</div>
-  <a href="https://wa.me/5215530207385?text=Hola!%20Me%20gustaría%20agendar%20una%20cita" target="_blank" class="wa-btn">
-    <span style="font-size:32px;line-height:1">💬</span>
-    <span class="wa-pulse"></span>
-  </a>
-</div>
+<!-- RESEÑAS -->
+<section id="resenas">
+  <div class="sec-tag">Lo que dicen nuestros clientes</div>
+  <h2 class="sec-heading"><span class="underline">RESEÑAS</span></h2>
+  <p class="sec-intro">Más de 500 clientes satisfechos nos avalan en Google. Aquí algunas de sus palabras.</p>
+  <div class="resenas-grid">
+    <div class="review-card gsap-reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"El mejor fade que me han hecho en Guadalajara. Don Marcos sabe exactamente lo que quieres con solo mirarte. Ya no voy a ningún otro lado."</p>
+      <div class="review-author">
+        <div class="review-av">JR</div>
+        <div>
+          <div class="review-name">Jorge Ramírez</div>
+          <div class="review-service">Fade Degradado</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card gsap-reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"El afeitado con navaja fue una experiencia increíble. Toalla caliente, espuma artesanal y el corte perfecto. Me fui sintiéndome como nuevo."</p>
+      <div class="review-author">
+        <div class="review-av red">MP</div>
+        <div>
+          <div class="review-name">Miguel Pérez</div>
+          <div class="review-service">Afeitado Navaja</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card gsap-reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"El Rincón del Barbero tiene ese ambiente de las barberías de antes. Precio justo, trabajo de primera. El combo Corte+Barba es imbatible."</p>
+      <div class="review-author">
+        <div class="review-av gold">CL</div>
+        <div>
+          <div class="review-name">Carlos López</div>
+          <div class="review-service">Corte + Barba</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- ESTADO ABIERTO/CERRADO -->
-<div class="status-bar" id="statusBar"></div>
-
-<style>
-/* TESTIMONIOS */
-.test-wrap{position:relative;max-width:800px;margin:0 auto;padding:0 60px}
-.test-slider{overflow:hidden;border-radius:4px}
-.test-card{display:none;background:var(--card);border:1px solid rgba(201,168,76,.12);padding:48px;opacity:0;transform:translateX(40px);transition:all .5s}
-.test-card.active{display:block;opacity:1;transform:translateX(0)}
-.stars{color:var(--gold);font-size:20px;letter-spacing:4px;margin-bottom:20px}
-.test-card p{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:rgba(245,240,232,.8);line-height:1.8;margin-bottom:28px}
-.test-author{display:flex;align-items:center;gap:16px}
-.test-av{width:48px;height:48px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--black);font-size:14px}
-.test-author strong{display:block;font-size:15px}
-.test-author span{font-size:11px;color:var(--gray);letter-spacing:2px}
-.test-dots{display:flex;justify-content:center;gap:10px;margin-top:28px}
-.dot-t{width:8px;height:8px;border-radius:50%;background:rgba(201,168,76,.25);cursor:pointer;transition:all .3s;border:none;padding:0}
-.dot-t.active{background:var(--gold);width:24px;border-radius:4px}
-.t-prev,.t-next{position:absolute;top:50%;transform:translateY(-60%);background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);width:44px;height:44px;cursor:pointer;font-size:16px;transition:all .3s;display:flex;align-items:center;justify-content:center}
-.t-prev{left:0}.t-next{right:0}
-.t-prev:hover,.t-next:hover{background:var(--gold);color:var(--black)}
-
-/* WHATSAPP FLOAT */
-.wa-float{position:fixed;bottom:32px;right:32px;z-index:999;display:flex;flex-direction:column;align-items:center;gap:10px}
-.wa-tooltip{background:var(--black);color:var(--white);font-size:12px;font-weight:600;padding:8px 14px;border-radius:20px;border:1px solid rgba(201,168,76,.2);white-space:nowrap;opacity:0;transform:translateY(4px);transition:all .3s;pointer-events:none}
-.wa-float:hover .wa-tooltip{opacity:1;transform:translateY(0)}
-.wa-btn{width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,.45);transition:all .3s;position:relative}
-.wa-btn:hover{transform:scale(1.1);box-shadow:0 10px 30px rgba(37,211,102,.6)}
-.wa-pulse{position:absolute;width:100%;height:100%;border-radius:50%;background:#25D366;animation:waPulse 2s ease-out infinite;z-index:-1}
-@keyframes waPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.8);opacity:0}}
-
-/* STATUS BAR */
-.status-bar{position:fixed;top:68px;left:50%;transform:translateX(-50%);padding:8px 24px;border-radius:0 0 20px 20px;font-size:12px;font-weight:700;letter-spacing:1px;z-index:99;transition:all .4s;display:flex;align-items:center;gap:8px;opacity:0;animation:sbIn .5s 2.5s forwards}
-.status-bar.open{background:#1E8449;color:white}
-.status-bar.closed{background:#C0392B;color:white}
-.status-dot{width:8px;height:8px;border-radius:50%;background:white;animation:blink 1.5s ease-in-out infinite}
-@keyframes sbIn{to{opacity:1}}
-</style>
+<!-- FOOTER -->
 <footer>
-  <div class="f-logo">BlackGold</div>
-  <p>© 2026 Black Gold Barbería — Naucalpan, Edo. México</p>
-  <div class="soc"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <span style="font-size:1.8rem">💈</span>
+        <div class="footer-logo-text">
+          <div class="name">El Rincón del Barbero</div>
+          <div class="sub">Guadalajara · Desde 1998</div>
+        </div>
+      </div>
+      <p class="footer-desc">Barbería clásica en el corazón de Zapopan. El arte del buen corte, preservado con orgullo.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Servicios</div>
+      <ul class="footer-list">
+        <li>Corte Clásico — $150</li>
+        <li>Fade Degradado — $180</li>
+        <li>Barba Completa — $120</li>
+        <li>Corte + Barba — $280</li>
+        <li>Afeitado Navaja — $200</li>
+        <li>Tratamiento Capilar — $250</li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-list">
+        <li>📍 Av. Patria 123, Zapopan, Jalisco</li>
+        <li>🕐 Lun–Sáb 9:00–20:00</li>
+        <li>📞 331 234 5678</li>
+        <li><a href="https://wa.me/523312345678?text=Hola!%20Quiero%20reservar%20un%20corte" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">📸 Instagram</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">👍 Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 El Rincón del Barbero. Todos los derechos reservados.</span>
+    <span class="footer-red-accent">✦ Hecho con orgullo en Guadalajara ✦</span>
+  </div>
 </footer>
 
+<!-- GSAP 3.12.5 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hide'),1800))
-// Scroll progress bar
-document.addEventListener('scroll',()=>{const s=document.documentElement;document.getElementById('spb').style.width=(s.scrollTop/(s.scrollHeight-s.clientHeight)*100)+'%'},{passive:true})
-// Nav active section spy
-const navSecObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));const a=document.querySelector(`.nav-links a[href="#${en.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:.4})
-;['servicios','galeria','proceso','contacto','testimonios'].forEach(id=>{const el=document.getElementById(id);if(el)navSecObs.observe(el)})
-// Ripple on CTA buttons
-document.querySelectorAll('.btn-g,.btn-o,.btn-wa').forEach(btn=>{btn.addEventListener('click',e=>{const r=document.createElement('span'),rect=btn.getBoundingClientRect(),d=Math.max(rect.width,rect.height);r.className='rpl';r.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-rect.left-d/2}px;top:${e.clientY-rect.top-d/2}px`;btn.appendChild(r);setTimeout(()=>r.remove(),600)})})
-// 3D tilt on service cards
-document.querySelectorAll('.svc').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect(),x=((e.clientX-r.left)/r.width-.5)*14,y=-((e.clientY-r.top)/r.height-.5)*14;card.style.transform=`translateY(-8px) rotateY(${x}deg) rotateX(${y}deg)`});card.addEventListener('mouseleave',()=>{card.style.transform=''})})
-// Typewriter on hero subtitle
-const twEl=document.querySelector('.h-sub')
-if(twEl){const txt=twEl.textContent.trim();twEl.textContent='';twEl.style.opacity='1';twEl.style.animation='none';let i=0;setTimeout(()=>{const cur=document.createElement('span');cur.className='tw-cursor';twEl.appendChild(cur);const t=setInterval(()=>{twEl.insertBefore(document.createTextNode(txt[i++]),cur);if(i>=txt.length){clearInterval(t);setTimeout(()=>cur.remove(),2000)}},45)},1800)}
-const hours={0:[null,null],1:[9,20],2:[9,20],3:[9,20],4:[9,20],5:[9,20],6:[9,20]}
-function checkStatus(){const now=new Date(),d=now.getDay(),h=now.getHours(),bar=document.getElementById('statusBar'),hr=hours[d];if(!hr||!hr[0]){bar.innerHTML='<span class="status-dot"></span> Hoy cerramos — Abrimos mañana';bar.className='status-bar closed'}else if(h>=hr[0]&&h<hr[1]){bar.innerHTML=`<span class="status-dot"></span> Abierto ahora · Cerramos a las ${hr[1]}:00`;bar.className='status-bar open'}else{bar.innerHTML=`<span class="status-dot"></span> Cerrado · Abrimos a las ${hr[0]}:00`;bar.className='status-bar closed'}}
-const KNOWN_SERVICES=['Corte Clásico - $120','Corte + Barba - $180','Manicure Clásico - $100','Manicure Gel - $200','Afeitado Clásico - $150','Paquete VIP - $350']
-function waService(s){if(!KNOWN_SERVICES.includes(s))return;window.open(`https://wa.me/5215530207385?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20para:%20${encodeURIComponent(s)}`,"_blank")}
-checkStatus()
-let tCur=0,tAuto
-const tCards=document.querySelectorAll('.test-card'),tDots=document.querySelectorAll('.dot-t')
-function goTo(n){tCards[tCur].classList.remove('active');tDots[tCur].classList.remove('active');tCur=n;tCards[tCur].classList.add('active');tDots[tCur].classList.add('active')}
-function changeSlide(d){goTo((tCur+d+tCards.length)%tCards.length)}
-tAuto=setInterval(()=>changeSlide(1),5000)
-document.querySelector('.test-wrap').addEventListener('mouseenter',()=>clearInterval(tAuto))
-document.querySelector('.test-wrap').addEventListener('mouseleave',()=>{tAuto=setInterval(()=>changeSlide(1),5000)})
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2')
-let mx=0,my=0,cx=0,cy=0
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
-;(function lp(){cx+=(mx-cx)*.14;cy+=(my-cy)*.14;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(lp)})()
-document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px'});el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px'})})
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60))
-const cv=document.getElementById('cnv'),ctx=cv.getContext('2d')
-function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight}resize()
-window.addEventListener('resize',resize)
-const pts=Array.from({length:80},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.5+.5,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()*.6+.1}))
-function draw(){
-  ctx.clearRect(0,0,cv.width,cv.height)
-  pts.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy
-    if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0
-    if(p.y<0)p.y=cv.height;if(p.y>cv.height)p.y=0
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(201,168,76,${p.a*.3})`;ctx.fill()
-    pts.forEach(q=>{const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<110){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(201,168,76,${(1-d/110)*.05})`;ctx.lineWidth=.5;ctx.stroke()}})
-  })
-  requestAnimationFrame(draw)
-}
-draw()
-const cObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){const el=en.target,t=+el.dataset.t,dur=2000,s=performance.now();(function step(n){const p=Math.min((n-s)/dur,1);el.textContent=Math.floor(p*t)+(p===1&&t>=100?'+':'');if(p<1)requestAnimationFrame(step)})(s);cObs.unobserve(el)}})},{threshold:.5})
-document.querySelectorAll('.stat-n').forEach(el=>cObs.observe(el))
-const rObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('on')})},{threshold:.1})
-document.querySelectorAll('.rev,.rev-l').forEach(el=>rObs.observe(el))
+gsap.registerPlugin(ScrollTrigger);
+
+// ── SCROLL PROGRESS BAR ──────────────────────────────────────────────────────
+const spb = document.getElementById('spb');
+document.addEventListener('scroll', () => {
+  const s = document.documentElement;
+  spb.style.width = (s.scrollTop / (s.scrollHeight - s.clientHeight) * 100) + '%';
+}, { passive: true });
+
+// ── HERO ANIMATIONS ──────────────────────────────────────────────────────────
+// Left side: headline lines slide in from left with stagger
+gsap.to(['#hl1', '#hl2', '#hl3'], {
+  x: 0, opacity: 1,
+  duration: 0.9,
+  ease: 'power3.out',
+  stagger: 0.15,
+  delay: 0.3
+});
+
+// Subtitle and buttons fade up
+gsap.to('#heroSub', {
+  opacity: 1, y: 0,
+  duration: 0.8,
+  ease: 'power2.out',
+  delay: 0.9
+});
+gsap.to('#heroBtns', {
+  opacity: 1, y: 0,
+  duration: 0.8,
+  ease: 'power2.out',
+  delay: 1.1
+});
+
+// Right side: pole pops in, badge, stats
+gsap.to('#heroPole', {
+  opacity: 1, scale: 1,
+  duration: 0.7,
+  ease: 'back.out(1.4)',
+  delay: 0.6
+});
+gsap.to('#heroBadge', {
+  opacity: 1, scale: 1,
+  duration: 0.5,
+  ease: 'power2.out',
+  delay: 0.9
+});
+gsap.to('#heroStats', {
+  opacity: 1, y: 0,
+  duration: 0.7,
+  ease: 'power2.out',
+  delay: 1.1
+});
+
+// ── SERVICE CARDS: ScrollTrigger stagger ─────────────────────────────────────
+gsap.to('.ticket', {
+  opacity: 1,
+  y: 0,
+  duration: 0.6,
+  ease: 'power2.out',
+  stagger: 0.1,
+  scrollTrigger: {
+    trigger: '.servicios-grid',
+    start: 'top 80%',
+    once: true
+  }
+});
+
+// ── GALLERY CARDS: ScrollTrigger stagger ─────────────────────────────────────
+gsap.to('.gal-card', {
+  opacity: 1,
+  y: 0,
+  duration: 0.6,
+  ease: 'power2.out',
+  stagger: 0.1,
+  scrollTrigger: {
+    trigger: '.galeria-grid',
+    start: 'top 80%',
+    once: true
+  }
+});
+
+// ── REVIEW CARDS ─────────────────────────────────────────────────────────────
+gsap.to('.gsap-reveal', {
+  opacity: 1,
+  y: 0,
+  duration: 0.65,
+  ease: 'power2.out',
+  stagger: 0.12,
+  scrollTrigger: {
+    trigger: '.resenas-grid',
+    start: 'top 82%',
+    once: true
+  }
+});
+
+// ── DON MARCOS section: fade in ───────────────────────────────────────────────
+gsap.from('.donmarcos-h', {
+  x: -40,
+  opacity: 0,
+  duration: 0.9,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#donmarcos',
+    start: 'top 75%',
+    once: true
+  }
+});
+gsap.from('.donmarcos-card', {
+  x: 40,
+  opacity: 0,
+  duration: 0.9,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#donmarcos',
+    start: 'top 75%',
+    once: true
+  }
+});
+
+// ── SERVICE CARD HOVER: thick border + translate ──────────────────────────────
+// (handled in CSS via .ticket:hover with border-left-color and translateX)
+
+// ── RESERVAR section entrance ─────────────────────────────────────────────────
+gsap.from('.reservar-h', {
+  y: 30,
+  opacity: 0,
+  duration: 0.8,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: '#reservar',
+    start: 'top 75%',
+    once: true
+  }
+});
+
+// ── NAV SCROLL STATE ──────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  if (window.scrollY > 50) {
+    nav.style.boxShadow = '0 4px 24px rgba(27,42,74,.18)';
+  } else {
+    nav.style.boxShadow = '0 2px 12px rgba(27,42,74,.1)';
+  }
+}, { passive: true });
 </script>
-<div id="spb"></div>
 </body>
 </html>
